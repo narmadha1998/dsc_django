@@ -1,0 +1,79 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Maps {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-plain">
+      <div class="card-header">
+        Google Maps
+      </div>
+      <div class="card-body">
+        <div id="map" class="map"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+<script>
+  $(document).ready(function() {
+    // Javascript method's body can be found in assets/js/demos.js
+    // demo.initGoogleMaps();
+    var locations = [
+      ['Guindy', 13.010236, 80.215652, 1, '{% url "view" id="1" %}'],
+      ['Adyar', 13.003387,  80.255043, 2, '{% url "view" id="2" %}'],
+      ['Tambaram', 12.9249, 80.1000, 3, '{% url "view" id="3" %}'],
+      ['Velachery', 12.9815, 80.2180, 4, '{% url "view" id="4" %}'],
+      ['Pallavaram', 12.9675, 80.1491, 5, '{% url "view" id="5" %}']
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: new google.maps.LatLng(12.9815, 80.2180),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map,
+      //   icon:{
+      //    url:"https://image.flaticon.com/icons/svg/3076/3076225.svg",
+      //    scaledSize: new google.maps.Size(25, 25),
+      //    anchor: new google.maps.Point(15, 15),
+      //  },
+        url :locations[i][4],
+        id : i,
+      });
+
+      // google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      //   return function() {
+      //     infowindow.setContent(locations[i][0]);
+      //     infowindow.open(map, marker);
+      //     infowindow.location.href = this.url;
+      //   }
+      // })(marker, i));
+
+      google.maps.event.addListener(marker, 'click', function() {
+    window.location.href = this.url;
+});
+    }
+  });
+</script>
+
+{% endblock javascripts %}

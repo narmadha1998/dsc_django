@@ -1,0 +1,269 @@
+
+              {% extends 'layouts/base.html' %}
+              {% load static %}
+              {% block title %} Maps {% endblock %}
+
+              <!-- Specific Page CSS goes HERE  -->
+              {% block stylesheets %}{% endblock stylesheets %}
+
+              {% block content %}
+                  <head>
+                      <meta name="viewport" content="width=device-width, initial-scale=1">
+                      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+                      <style>
+                      * {
+                        box-sizing: border-box;
+                      }
+
+
+                      .image {
+                    position: absolute;
+                        /* margin:-60px 0 0 -60px; */
+                        -webkit-animation:spin 4s linear infinite;
+                        -moz-animation:spin 4s linear infinite;
+                        animation:spin 4s linear infinite;
+                    }
+                    @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+                    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+                    @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+                      body {
+                        font-family: Arial, Helvetica, sans-serif;
+                      }
+
+                      /* Float two columns side by side */
+                      .column {
+                        float: left;
+                        width: 33.3%;
+                        padding: 10px 20px;
+                      }
+
+                      /* Remove extra left and right margins, due to padding */
+                      .row {margin: 0 -5px;}
+
+                      /* Clear floats after the columns */
+                      .row:after {
+                        content: "";
+                        display: table;
+                        clear: both;
+                      }
+
+                      /* Responsive columns */
+                      @media screen and (max-width: 600px) {
+                        .column {
+                          width: 100%;
+                          display: block;
+                          margin-bottom: 20px;
+                        }
+                        .rightelement {
+                          width: 100%;
+                        }
+                       
+                      }
+
+                      /* Style the counter cards */
+                      .card {
+                        box-shadow: 0 4px 8px 0 rgba(198, 74, 247, 0.2);
+                        padding: 1px;
+                        text-align: center;
+                        font-size: 20px;
+                       
+
+                      }
+                      </style>
+              </head>
+              <body>
+                <div class ="row">
+                <div class="column">
+                  <div class ="row">
+                    <div class="card card-chart">  
+                      <canvas id="bar-chart-horizontal2" width="800" height="550"></canvas><br>
+                      
+                    </div></div>
+                    <div class ="row">
+                      <div class="card card-chart">    
+                    
+                      <canvas id="bar-chart-horizontal1" width="800" height="400"></canvas>    <br>
+                      </div></div>
+                      
+                  </div>
+
+
+                <div class="column">
+                <img  src="/static/assets/img/3d-colour.png" style="height:500px"/>
+                </div>
+
+                <div class="column" >
+                  <div class ="row">
+                  <div class="card card-chart">
+                    <canvas id="doughnut-chart" width="800" height="550"></canvas><br>
+                    <!-- <div class="card-body"> -->
+                      
+                      </div>
+                  </div>
+                      <div class ="row">
+                        <div class="card card-chart">
+                      <canvas id="bar-chart-horizontal3" width="800" height="400"></canvas><br>
+                    </div>
+                    </div>
+                  <!-- </div> -->
+                 
+                </div>
+
+                 </div>
+               
+                 <br><br>
+                
+                 <div class="w3-container w3-center">
+                   <!-- <h4 style="color:dodgerblue"><b>{{i.name}}</b></h4> -->
+                   <form class='form-video-ajax' method='POST' action="{% url 'trackperson' id=suspects.id %}" class="form"> {% csrf_token %}
+                       <button class="btn btn-success btn-lg" type=submit >Track Person</button>
+                 </form>
+                </div>
+              </body>
+              <script>
+                window.onload = function () {
+          new Chart(document.getElementById("bar-chart-horizontal1"), {
+          type: 'horizontalBar',
+          data: {
+            labels: ['Adult', 'Spoof','Violence','Racy'],
+            datasets: [
+              {
+                label: "Percentage",
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850",],
+                data:  ['60','10','40','60']
+              }
+            ]
+          },
+          options: {
+            legend: { 
+              display: false,
+             },
+            title: {
+              display: true,
+              fontColor: 'white',
+              text: 'Appearance',
+              fontSize: 20
+            },
+            scales: {
+              yAxes: [{
+                  ticks: {
+                      fontSize: 20,
+                      fontColor: 'pink'
+                  }
+              }],
+              xAxes: [{
+                  ticks: {
+                      fontSize: 20,
+                      fontColor: 'pink'
+                  }
+              }]
+          }
+          }
+          });
+                
+      new Chart(document.getElementById("bar-chart-horizontal2"), {
+      type: 'horizontalBar',
+      data: {
+        labels: ['Angry', 'Joy', 'Sorrow','Surprised','Headwear','Exposed','Blurred'],
+        datasets: [
+          {
+            label: "Percentage",
+            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#3e95cd", "#8e5ea2"],
+            data:  ['2','2','20','4','1','50','30']
+          }
+        ]
+      },
+      options: {
+        legend: { 
+          display: false,
+         },
+        title: {
+          display: true,
+          fontColor: 'white',
+          text: 'Facial Attributes',
+          fontSize: 20
+        },
+        scales: {
+          yAxes: [{
+              ticks: {
+                  fontSize: 20,
+                  fontColor: 'pink'
+              }
+          }],
+          xAxes: [{
+              ticks: {
+                  fontSize: 20,
+                  fontColor: 'pink'
+              }
+          }]
+      }
+      }
+      });
+      new Chart(document.getElementById("bar-chart-horizontal3"), {
+      type: 'horizontalBar',
+      data: {
+        labels: ['Top wear','Short wear','Shoe','Bag'],
+        datasets: [
+          {
+            label: "Percentage",
+            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
+            data:  ['95','81','75','50']
+          }
+        ]
+      },
+      options: {
+        legend: { 
+          display: false,
+         },
+        title: {
+          display: true,
+          fontColor: 'white',
+          text: 'Clothing',
+          fontSize: 20
+        },
+        scales: {
+          yAxes: [{
+              ticks: {
+                  fontSize: 20,
+                  fontColor: 'pink',
+                 
+              }
+          }],
+         
+          xAxes: [{
+              ticks: {
+                  fontSize: 20,
+                  fontColor: 'pink'
+              }
+          }]
+      }
+      }
+      });
+      new Chart(document.getElementById("doughnut-chart"), {
+    type: 'doughnut',
+    data: {
+      datasets: [
+        {
+          label: "Percentage",
+          backgroundColor: ["#2E2F40", "#4A5164","#1A1A2B","#6C7689","#50515A"],
+          data: [32,21,16,13,5]
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Clothing Colors',
+        fontColor: 'white',
+        fontSize: 20
+      }
+    }
+});
+            }
+      </script> 
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+          
+          
+
+              {% endblock content %}
